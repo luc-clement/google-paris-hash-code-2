@@ -12,5 +12,15 @@ public class Main {
 		LOGGER.debug("Welcome to the Public Static Team Qualification Round program :)");
 		
 	}
+	
+	public void parseInputFile() {
+		LOGGER.debug("parsing input file.");
+		// TODO
+	}
+	
+	public void writeAnswer() {
+		LOGGER.debug("write answer in ouput file");
+		// TODO
+	}
 
 }
