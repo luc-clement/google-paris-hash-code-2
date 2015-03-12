@@ -31,6 +31,8 @@ public class Main {
 		
 		Group.sortRowsByGroup();
 		
+		calculateAnswer();
+		
 		writeAnswer();
 	}
 	
@@ -82,6 +84,45 @@ public class Main {
 		FileUtils.readNextLine();
 		LOGGER.debug("Parsing input file : done.");
 		
+	}
+	
+	private static int calculateAnswer() {
+		int result = Integer.MAX_VALUE;
+		
+		for (int i=0; i<nbPools; ++i) {
+			int scoreGroup = calculateGroupScore(i);
+			
+			if (scoreGroup < result) {
+				result = scoreGroup;
+			}
+		}
+		
+		LOGGER.info("FINAL SCORE : " + result);
+		return result;
+	}
+	
+	private static int calculateGroupScore(int groupId) {
+		int GroupTotalCapacity = 0;
+		for (Server server : Group.groups[groupId].getListServers()) {
+			GroupTotalCapacity += server.getCapacity();
+		}
+		
+		LOGGER.info("Group " + groupId + " total capacity : " + GroupTotalCapacity);
+		int Score = GroupTotalCapacity;
+		for (int i=0; i<nbRows; ++i) {
+			int RowGroupCapacity = 0;
+			for (Server server : Group.groups[groupId].getListServers()) {
+				if (server.getRow() == i) {
+					RowGroupCapacity += server.getCapacity();
+				}
+			}
+			int GroupWithoutRow = GroupTotalCapacity - RowGroupCapacity;
+			if (GroupWithoutRow < Score) {
+				Score = GroupWithoutRow;
+			}
+		}
+		LOGGER.info("Group " + groupId + " final score : " + Score);
+		return Score;
 	}
 	
 	private static void writeAnswer() {
