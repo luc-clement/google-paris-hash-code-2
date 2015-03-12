@@ -7,6 +7,7 @@ public class Row {
 	public static Row[] rows;
 	
 	private int id;
+	private int capacity;
 	private int[] occupation;
 	private HashMap<Integer, Server> layout = new HashMap<Integer, Server>();
 	
@@ -23,14 +24,24 @@ public class Row {
 			occupation[slot+i] = 0;
 		}
 		layout.put(slot, server);
+		capacity += server.getCapacity();
 	}
-	
+
 	public Row(int id, int size) {
 		this.id = id;
 		occupation = new int[size];
 		for (int i=0; i < size; ++i) {
 			occupation[i] = 0;
 		}
+		this.capacity = 0;
+	}
+	
+	public int getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 	
 	public void addUnavailableSlot(int slot) {
