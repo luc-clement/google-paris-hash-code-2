@@ -1,4 +1,4 @@
-package alexutils;
+package fr.google.paris.hashcode;
 
 import java.util.LinkedList;
 import java.util.Stack;
