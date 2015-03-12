@@ -43,6 +43,12 @@ public class Main {
 		LOGGER.debug("number of pools : " + nbPools);
 		LOGGER.debug("number of servers : " + nbServers);
 		
+		LOGGER.debug("Create groups array.");
+		Group.groups = new Group[nbPools];
+		for (int i=0; i<nbPools; ++i) {
+			Group.groups[i] = new Group(i);
+		}
+		
 		LOGGER.debug("Create rows array.");
 		Row.rows = new Row[nbRows];
 		for (int i=0; i<nbRows; ++i) {
@@ -73,8 +79,12 @@ public class Main {
 	private static void writeAnswer() {
 			FileUtils.openFile(outputDirectory);
 
-			for (int i=1; i<=15; ++i) {
-				FileUtils.writeNewLine("Line " + i);
+			for (int i=0; i<nbServers; ++i) {
+				if (Server.servers[i].getRow() != -1) {
+					FileUtils.writeNewLine(Server.servers[i].getRow() + " " + Server.servers[i].getSlot() + " " + Server.servers[i].getGroup());
+				} else {
+					FileUtils.writeNewLine("x");
+				}
 			}
 			
 			FileUtils.closeFile();

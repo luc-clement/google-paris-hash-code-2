@@ -11,9 +11,9 @@ public class Server implements Comparator<Server> {
 	private int size;
 	private float ratio;
 	
-	private int row;
-	private int slot;
-	private int group;
+	private int row = -1;
+	private int slot = -1;
+	private int group = -1;
 	
 	public int getId() {
 		return id;
