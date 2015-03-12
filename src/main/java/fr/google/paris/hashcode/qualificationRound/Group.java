@@ -33,24 +33,33 @@ public class Group {
 		int size = serverList.size();
 		System.out.println(size);
 		for(int i=0; i<size; i++){
-			if(i%groups.length == 0)
-				alreadyChosenGroup = new ArrayList<Integer>();
+//			if(i%groups.length == 0)
+//				alreadyChosenGroup = new ArrayList<Integer>();
+//			int group = groupWhereInsertBestServer(alreadyChosenGroup);
+//			Server server = null;
+//			for(Server s : serverList){
+//				if (s == null) {
+//					System.out.println("ERROR ERROR ERROR");
+//				}
+//				if(!alreadyChosenServer.contains(s.getId())){
+//					if(server == null) {
+//						server = s;
+//					} else {
+//						if(server.getCapacity()<s.getCapacity())
+//							server = s;
+//					}
+//				}
+//			}
+			
 			int group = groupWhereInsertBestServer(alreadyChosenGroup);
-			Server server = null;
-			for(Server s : serverList){
-				if(!alreadyChosenServer.contains(s.getId())){
-					if(server == null) {
-						server = s;
-					} else {
-						if(server.getCapacity()<s.getCapacity())
-							server = s;
-					}
-				}
-			}
+			Server server = serverList.get(i);
+			
 			if (server != null) {
 				groups[group].addServer(server);
 				alreadyChosenGroup.add(group);
 				alreadyChosenServer.add(server.getId());
+			} else {
+				System.out.println("ERROR ERROR");
 			}
 		}
 	};
