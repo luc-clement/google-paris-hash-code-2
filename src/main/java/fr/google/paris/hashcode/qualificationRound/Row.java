@@ -1,15 +1,89 @@
 package fr.google.paris.hashcode.qualificationRound;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.SortedSet;
 
 public class Row {
 
 	public static Row[] rows;
-	
+	private int length;
 	private int id;
 	private int capacity;
 	private int[] occupation;
 	private HashMap<Integer, Server> layout = new HashMap<Integer, Server>();
+	
+	public class FreeSpace implements Comparable<FreeSpace>{
+		public int getSize() {
+			return size;
+		}
+
+		public void setSize(int size) {
+			this.size = size;
+		}
+
+		public int getFirst_slot() {
+			return first_slot;
+		}
+
+		public void setFirst_slot(int first_slot) {
+			this.first_slot = first_slot;
+		}
+
+		private int size;
+		private int first_slot;
+		
+		public FreeSpace(int f_s,int s){
+			first_slot = f_s;
+			size = s;
+		}
+
+		@Override
+		public int compareTo(FreeSpace o1) {
+			// TODO Auto-generated method stub
+			if (size > o1.size){
+				return 1;
+			}
+			else if (size == o1.size){
+				return 0;
+			}
+			
+			else {
+				return -1;
+			}
+			
+		}
+	}
+	
+	private List<FreeSpace> freespaces;
+	
+	public List<FreeSpace> getFreespaces() {
+		return freespaces;
+	}
+
+	public void _buildFreeSpaces(){
+		freespaces = new ArrayList<FreeSpace>();
+		int size = 0;
+		int first_slot = 0;
+		for (int i = 0 ; i < length ; i++ ){
+			if (occupation[i] == 0) {
+				size++;
+			}
+			else if ( size == 0){
+				first_slot++;
+			}
+			else {
+				freespaces.add(new FreeSpace(first_slot,size));
+				first_slot++;
+				size = 0;
+			}
+		}
+		if (size != 0 ) {
+			freespaces.add(new FreeSpace(first_slot,size));
+		}
+	}
 	
 	public void addServer(int slot, Server server) throws PlacementException {
 		// Check if it's possible
@@ -21,16 +95,17 @@ public class Row {
 		
 		// If we are here then it's ok to add it
 		for (int i=0; i<server.getSize(); ++i) {
-			occupation[slot+i] = 0;
+			occupation[slot+i] = 1;
 		}
 		layout.put(slot, server);
 		capacity += server.getCapacity();
 	}
 
-	public Row(int id, int size) {
+	public Row(int id, int length) {
 		this.id = id;
-		occupation = new int[size];
-		for (int i=0; i < size; ++i) {
+		this.length = length;
+		occupation = new int[length];
+		for (int i=0; i < length; ++i) {
 			occupation[i] = 0;
 		}
 		this.capacity = 0;
