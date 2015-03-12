@@ -18,11 +18,18 @@ public class Main {
 	public static int nbPools;
 	public static int nbServers;
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PlacementException {
 
 		LOGGER.info("Welcome to the Public Static Team Qualification Round software :)");
 		
 		parseInputFile();
+		
+		for (int i=0; i<nbRows; ++i) {
+			Row.rows[i]._buildFreeSpaces();
+		}
+		Row.placeServers();
+		Group.sortRowsByGroup();
+		
 		writeAnswer();
 	}
 	
