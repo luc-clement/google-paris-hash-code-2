@@ -31,7 +31,7 @@ public class Group {
 	public Group(int id, int capacity) {
 		super();
 		this.id = id;
-		this.capacity = capacity;
+		this.capacity = 0;
 	}
 
 	public int getId() {
