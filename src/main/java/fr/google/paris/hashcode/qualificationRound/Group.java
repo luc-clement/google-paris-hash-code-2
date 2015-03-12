@@ -28,8 +28,7 @@ public class Group {
 	    return result;
 	}
 	
-	public Group(int id, int capacity) {
-		super();
+	public Group(int id) {
 		this.id = id;
 		this.capacity = 0;
 	}
