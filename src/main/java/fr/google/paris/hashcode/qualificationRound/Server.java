@@ -2,7 +2,7 @@ package fr.google.paris.hashcode.qualificationRound;
 
 import java.util.Comparator;
 
-public class Server implements Comparator<Server> {
+public class Server implements Comparable<Server> {
 
 	public static Server[] servers;
 	
@@ -56,18 +56,18 @@ public class Server implements Comparator<Server> {
 	}
 	
 	@Override
-	public int compare(Server s1, Server s2) {
+	public int compareTo(Server s2) {
 		
-		if (s1.getRatio() > s2.getRatio()) {
+		if (ratio > s2.getRatio()) {
 			return 1;
-		} else if (s1.getRatio() < s2.getRatio()) {
+		} else if (ratio < s2.getRatio()) {
 			return -1;
 		} 
 
 		// Here the ratio are the same for s1 and s2
-		if (s1.getSize() < s2.getSize()) {
+		if (size < s2.getSize()) {
 			return 1;
-		} else if (s1.getSize() > s2.getSize()) {
+		} else if (size > s2.getSize()) {
 			return -1;
 		}
 		
