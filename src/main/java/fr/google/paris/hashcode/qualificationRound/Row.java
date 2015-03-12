@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 
-public class Row {
+public class Row implements Comparable<Row>{
 
 	public static Row[] rows;
 	private int length;
@@ -112,7 +112,6 @@ public class Row {
 	
 	public void addServer(int slot, Server server) throws PlacementException {
 		// Check if it's possible
-		// TODO : Don't forget to update server
 		for (int i=0; i<server.getSize(); ++i) {
 			if (occupation[slot+i] != 0) {
 				throw new PlacementException("The server can not be add, the slots are not available.");
@@ -125,6 +124,8 @@ public class Row {
 		}
 		layout.put(slot, server);
 		capacity += server.getCapacity();
+		server.setRow(id);
+		server.setSlot(slot);
 	}
 
 	public Row(int id, int length) {
@@ -173,5 +174,48 @@ public class Row {
 		this.layout = layout;
 	} 
 	
+	
+	public static void placeServers() throws PlacementException{
+		Server[] servers = Server.servers;
+		ArrayList<Server> sortedServers = new ArrayList<Server>();
+		ArrayList<Row> sortedRows = new ArrayList<Row>();
+		
+		for(int i=0; i < servers.length; ++i){
+			sortedServers.add(servers[i]);
+		}
+		Collections.sort(sortedServers);
+		
+		for(int i=0; i < rows.length; ++i){
+			sortedRows.add(rows[i]);
+		}
+		Collections.sort(sortedRows);
+		
+		Server server;
+		int currentServerIndex = 0;
+		int rowIndexToAdd;
+		while(currentServerIndex < sortedServers.size()){
+			server = sortedServers.get(currentServerIndex);
+			rowIndexToAdd = -1;
+			for(int i=0; i < sortedRows.size(); ++i){
+				if(sortedRows.get(i).canAddServer(server)){
+					rowIndexToAdd = i;
+					break;
+				}
+			}
+			if(rowIndexToAdd != -1){
+				sortedRows.get(rowIndexToAdd).addServer(server);
+				Collections.sort(sortedRows);
+			}
+			currentServerIndex++;
+		}
+	}
+
+	@Override
+	public int compareTo(Row o) {
+		if( capacity > o.getCapacity())
+			return 1;
+		else
+			return -1;
+	}
 	
 }
