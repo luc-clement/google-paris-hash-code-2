@@ -75,7 +75,7 @@ public class Row implements Comparable<Row>{
 			}
 			else {
 				freespaces.add(new FreeSpace(first_slot,size));
-				first_slot++;
+				first_slot = i+1;
 				size = 0;
 			}
 		}

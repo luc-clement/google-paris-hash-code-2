@@ -9,7 +9,7 @@ public class Group {
 	public static Group[] groups;
 	
 	private int id;
-	private int capacity;
+	private int capacity = 0;
 	private List<Server> listServers = new ArrayList<Server>();
 	
 	private void addServer(Server server) {
@@ -25,12 +25,18 @@ public class Group {
 	};
 	
 	public static void sortRowByGroup(Row row){
+		try {
 		List<Integer> alreadyChosenGroup = new ArrayList<Integer>();
 		List<Integer> alreadyChosenServer = new ArrayList<Integer>();
 		HashMap<Integer, Server> servers = row.getLayout();
-		List<Server> serverList = (List<Server>) servers.values();
-		int size = servers.size();
+		List<Server> serverList = new ArrayList<Server>(servers.values());
+		System.out.println(serverList.toString());
+		int size = serverList.size();
+		System.out.println(size);
 		for(int i=0; i<size; i++){
+			if (alreadyChosenServer.size() == size) {
+				break;
+			}
 			if(i%groups.length == 0)
 				alreadyChosenGroup = new ArrayList<Integer>();
 			int group = groupWhereInsertBestServer(alreadyChosenGroup);
@@ -49,7 +55,9 @@ public class Group {
 			alreadyChosenGroup.add(group);
 			alreadyChosenServer.add(server.getId());
 		}
-		
+		} catch (Exception e) {
+			return;
+		}
 	};
 	
 	public static int groupWhereInsertBestServer(List<Integer> alreadyChosen) {
