@@ -4,6 +4,8 @@ import java.util.Comparator;
 
 public class Server implements Comparator<Server> {
 
+	public static Server[] servers;
+	
 	int id;
 	int capacity;
 	int size;

@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class Row {
 
+	public static Row[] rows;
+	
 	private int id;
 	private int[] occupation;
 	private HashMap<Integer, Server> layout = new HashMap<Integer, Server>();
@@ -23,16 +25,17 @@ public class Row {
 		layout.put(slot, server);
 	}
 	
-	public Row(int id, int size, int[] unavailable) {
+	public Row(int id, int size) {
 		this.id = id;
 		occupation = new int[size];
 		for (int i=0; i < size; ++i) {
 			occupation[i] = 0;
 		}
-		for (int i=0; i<unavailable.length; i++) {
-			occupation[unavailable[i]] = -1;
-		}
 	}
+	
+	public void addUnavailableSlot(int slot) {
+		occupation[slot] = -1;
+	} 
 	
 	public int getId() {
 		return id;
