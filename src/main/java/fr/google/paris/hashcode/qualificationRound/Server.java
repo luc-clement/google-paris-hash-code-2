@@ -6,10 +6,14 @@ public class Server implements Comparator<Server> {
 
 	public static Server[] servers;
 	
-	int id;
-	int capacity;
-	int size;
-	float ratio;
+	private int id;
+	private int capacity;
+	private int size;
+	private float ratio;
+	
+	private int row;
+	private int slot;
+	private int group;
 	
 	public int getId() {
 		return id;
@@ -69,6 +73,30 @@ public class Server implements Comparator<Server> {
 		
 		// They can be equals at this point 
 		return 0;
+	}
+
+	public int getGroup() {
+		return group;
+	}
+
+	public void setGroup(int group) {
+		this.group = group;
+	}
+
+	public int getRow() {
+		return row;
+	}
+
+	public void setRow(int row) {
+		this.row = row;
+	}
+
+	public int getSlot() {
+		return slot;
+	}
+
+	public void setSlot(int slot) {
+		this.slot = slot;
 	}
 	
 	
