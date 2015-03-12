@@ -1,6 +1,7 @@
 package fr.google.paris.hashcode.qualificationRound;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Row {
 	private int capacity;
 	private int[] occupation;
 	private HashMap<Integer, Server> layout = new HashMap<Integer, Server>();
+	private int maxServerSize = 0;  
 	
 	public class FreeSpace implements Comparable<FreeSpace>{
 		public int getSize() {
@@ -57,9 +59,9 @@ public class Row {
 		}
 	}
 	
-	private List<FreeSpace> freespaces;
+	private ArrayList<FreeSpace> freespaces;
 	
-	public List<FreeSpace> getFreespaces() {
+	public ArrayList<FreeSpace> getFreespaces() {
 		return freespaces;
 	}
 
@@ -85,8 +87,32 @@ public class Row {
 		}
 	}
 	
+	public boolean canAddServer(Server server){
+		Collections.sort(freespaces);
+		int maxSpaceSize = freespaces.get(freespaces.size() - 1).size;
+		return server.getSize() <= maxSpaceSize;
+	}
+	
+	public void addServer(Server server) throws PlacementException{ 
+		if (!canAddServer(server)){
+			throw new PlacementException("The server was to big to bee added");
+		}
+		
+		Collections.sort(freespaces);
+		for (FreeSpace fs : freespaces){
+			if(fs.getSize() >= server.getSize()){
+				addServer(fs.first_slot,server);
+				fs.setSize(fs.getSize() - server.getSize());
+				fs.setFirst_slot(fs.first_slot + server.getSize());
+				Collections.sort(freespaces);
+				return;
+			}
+		}
+	}
+	
 	public void addServer(int slot, Server server) throws PlacementException {
 		// Check if it's possible
+		// TODO : Don't forget to update server
 		for (int i=0; i<server.getSize(); ++i) {
 			if (occupation[slot+i] != 0) {
 				throw new PlacementException("The server can not be add, the slots are not available.");
