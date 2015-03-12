@@ -18,8 +18,8 @@ public class Group {
 		server.setId(id);
 	}
 	
-	public static void sortRowsByGroup(Row[] rows){
-		for(Row r : rows){
+	public static void sortRowsByGroup(){
+		for(Row r : Row.rows){
 			sortRowByGroup(r);
 		}
 	};
