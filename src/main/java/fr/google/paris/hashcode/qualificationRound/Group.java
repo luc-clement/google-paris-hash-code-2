@@ -15,7 +15,7 @@ public class Group {
 	private void addServer(Server server) {
 		capacity += server.getCapacity();
 		listServers.add(server);
-		server.setId(id);
+		server.setGroup(id);
 	}
 	
 	public static void sortRowsByGroup(){
