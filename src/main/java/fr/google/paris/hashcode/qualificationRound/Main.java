@@ -28,9 +28,6 @@ public class Main {
 			Row.rows[i]._buildFreeSpaces();
 		}
 		Row.placeServers();
-		for (int i=0; i<16; ++i) {
-			System.out.println(Row.rows[i].getLayout().size());
-		}
 		
 		Group.sortRowsByGroup();
 		
