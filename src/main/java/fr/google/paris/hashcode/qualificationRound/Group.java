@@ -25,7 +25,6 @@ public class Group {
 	};
 	
 	public static void sortRowByGroup(Row row){
-		try {
 		List<Integer> alreadyChosenGroup = new ArrayList<Integer>();
 		List<Integer> alreadyChosenServer = new ArrayList<Integer>();
 		HashMap<Integer, Server> servers = row.getLayout();
@@ -34,29 +33,25 @@ public class Group {
 		int size = serverList.size();
 		System.out.println(size);
 		for(int i=0; i<size; i++){
-			if (alreadyChosenServer.size() == size) {
-				break;
-			}
 			if(i%groups.length == 0)
 				alreadyChosenGroup = new ArrayList<Integer>();
 			int group = groupWhereInsertBestServer(alreadyChosenGroup);
 			Server server = null;
 			for(Server s : serverList){
 				if(!alreadyChosenServer.contains(s.getId())){
-					if(server == null)
+					if(server == null) {
 						server = s;
-					else{
+					} else {
 						if(server.getCapacity()<s.getCapacity())
 							server = s;
 					}
 				}
 			}
-			groups[group].addServer(server);
-			alreadyChosenGroup.add(group);
-			alreadyChosenServer.add(server.getId());
-		}
-		} catch (Exception e) {
-			return;
+			if (server != null) {
+				groups[group].addServer(server);
+				alreadyChosenGroup.add(group);
+				alreadyChosenServer.add(server.getId());
+			}
 		}
 	};
 	
