@@ -20,8 +20,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 
-		LOGGER.debug("Hello World !");
-		LOGGER.debug("Welcome to the Public Static Team Qualification Round program :)");
+		LOGGER.info("Welcome to the Public Static Team Qualification Round software :)");
 		
 		parseInputFile();
 		writeAnswer();
@@ -37,6 +36,12 @@ public class Main {
 		nbUnavailable = Integer.parseInt(initialData[2]);
 		nbPools = Integer.parseInt(initialData[3]);
 		nbServers = Integer.parseInt(initialData[4]);
+		
+		LOGGER.debug("Number of rows : " + nbRows);
+		LOGGER.debug("number of slots per row : " + nbSlots);
+		LOGGER.debug("number of unavailable slots : " + nbUnavailable);
+		LOGGER.debug("number of pools : " + nbPools);
+		LOGGER.debug("number of servers : " + nbServers);
 		
 		LOGGER.debug("Create rows array.");
 		Row.rows = new Row[nbRows];
