@@ -46,6 +46,8 @@ public class Group {
 				}
 			}
 			groups[group].addServer(server);
+			alreadyChosenGroup.add(group);
+			alreadyChosenServer.add(server.getId());
 		}
 		
 	};
