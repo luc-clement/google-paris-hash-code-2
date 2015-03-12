@@ -1,6 +1,7 @@
 package fr.google.paris.hashcode.qualificationRound;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Group {
@@ -14,9 +15,42 @@ public class Group {
 	private void addServer(Server server) {
 		capacity += server.getCapacity();
 		listServers.add(server);
+		server.setId(id);
 	}
 	
-	public int groupWhereInsertBestServer(List<Integer> alreadyChosen) {
+	public static void sortRowsByGroup(Row[] rows){
+		for(Row r : rows){
+			sortRowByGroup(r);
+		}
+	};
+	
+	public static void sortRowByGroup(Row row){
+		List<Integer> alreadyChosenGroup = new ArrayList<Integer>();
+		List<Integer> alreadyChosenServer = new ArrayList<Integer>();
+		HashMap<Integer, Server> servers = row.getLayout();
+		List<Server> serverList = (List<Server>) servers.values();
+		int size = servers.size();
+		for(int i=0; i<size; i++){
+			if(i%groups.length == 0)
+				alreadyChosenGroup = new ArrayList<Integer>();
+			int group = groupWhereInsertBestServer(alreadyChosenGroup);
+			Server server = null;
+			for(Server s : serverList){
+				if(!alreadyChosenServer.contains(s.getId())){
+					if(server == null)
+						server = s;
+					else{
+						if(server.getCapacity()<s.getCapacity())
+							server = s;
+					}
+				}
+			}
+			groups[group].addServer(server);
+		}
+		
+	};
+	
+	public static int groupWhereInsertBestServer(List<Integer> alreadyChosen) {
 		int minCapacity = Integer.MAX_VALUE;
 		int result = -1;
 		for (int i=0; i<groups.length; ++i) {
