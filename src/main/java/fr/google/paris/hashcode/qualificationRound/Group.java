@@ -16,6 +16,18 @@ public class Group {
 		listServers.add(server);
 	}
 	
+	public int groupWhereInsertBestServer(List<Integer> alreadyChosen) {
+		int minCapacity = Integer.MAX_VALUE;
+		int result = -1;
+		for (int i=0; i<groups.length; ++i) {
+			if (!alreadyChosen.contains(i) && groups[i].capacity < minCapacity) {
+				minCapacity = groups[i].capacity;
+				result = i;
+			}
+		}
+	    return result;
+	}
+	
 	public Group(int id, int capacity) {
 		super();
 		this.id = id;
