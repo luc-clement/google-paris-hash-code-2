@@ -80,7 +80,9 @@ public class Main {
 			FileUtils.openFile(outputDirectory);
 
 			for (int i=0; i<nbServers; ++i) {
-				if (Server.servers[i].getRow() != -1) {
+				if (Server.servers[i].getRow() != -1 
+						&& Server.servers[i].getSlot() != -1 
+						&& Server.servers[i].getGroup() != -1) {
 					FileUtils.writeNewLine(Server.servers[i].getRow() + " " + Server.servers[i].getSlot() + " " + Server.servers[i].getGroup());
 				} else {
 					FileUtils.writeNewLine("x");
