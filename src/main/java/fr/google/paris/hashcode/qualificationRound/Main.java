@@ -28,12 +28,36 @@ public class Main {
 			Row.rows[i]._buildFreeSpaces();
 		}
 		Row.placeServers();
+		LOGGER.debug("nOpenSlots after placing servers : " + totalOpenSlots());
+		LOGGER.debug("nb of servers placed : " + nTotalServers());
+		LOGGER.debug("total capacity : " + totalCapacity());
 		
 		Group.sortRowsByGroup();
 		
 		calculateAnswer();
 		
 		writeAnswer();
+	}
+	
+	private static int totalOpenSlots(){
+		int nOpenSlots = 0;
+		for(int i = 0; i < nbRows; ++i)
+			nOpenSlots += Row.rows[i].getnOpenSlots();
+		return nOpenSlots;
+	}
+	
+	private static int nTotalServers(){
+		int nServers = 0;
+		for(int i = 0; i < nbRows; ++i)
+			nServers += Row.rows[i].getnServers();
+		return nServers;
+	}
+	
+	private static int totalCapacity(){
+		int capacity = 0;
+		for(int i = 0; i < nbRows; ++i)
+			capacity += Row.rows[i].getCapacity();
+		return capacity;
 	}
 	
 	private static void parseInputFile() {

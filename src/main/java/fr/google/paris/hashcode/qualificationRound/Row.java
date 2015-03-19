@@ -171,7 +171,6 @@ public class Row implements Comparable<Row>{
 		this.layout = layout;
 	} 
 	
-	
 	public static void placeServers() throws PlacementException{
 		Server[] servers = Server.servers;
 		ArrayList<Server> sortedServers = new ArrayList<Server>();
@@ -207,6 +206,18 @@ public class Row implements Comparable<Row>{
 		}
 	}
 
+	public int getnOpenSlots(){
+		int openSlots = 0;
+		for(int i = 0; i < length; ++i)
+			if(occupation[i] == 0)
+				++openSlots;
+		return openSlots;
+	}
+
+	public int getnServers(){
+		return layout.size();
+	}
+	
 	@Override
 	public int compareTo(Row o) {
 		if( capacity > o.getCapacity())
